@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+{% block head %}
+    <style>
+        @import url("//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
+        .login-block{
+            background: #DE6262;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to bottom, #FFB88C, #DE6262);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to bottom, #FFB88C, #DE6262); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            float:left;
+            width:100%;
+            padding : 50px 0;
+        }
+        .banner-sec{background:url(https://source.unsplash.com/1600x900/?covid-19,hospital,Covid-19)  no-repeat left bottom; background-size:cover; min-height:500px; border-radius: 0 10px 10px 0; padding:0;}
+        .container{background:#fff; border-radius: 10px; box-shadow:15px 20px 0px rgba(0,0,0,0.1);}
+        .carousel-inner{border-radius:0 10px 10px 0;}
+        .carousel-caption{text-align:left; left:5%;}
+        .login-sec{padding: 50px 30px; position:relative;}
+        .login-sec .copy-text{position:absolute; width:80%; bottom:20px; font-size:13px; text-align:center;}
+        .login-sec .copy-text i{color:#FEB58A;}
+        .login-sec .copy-text a{color:#E36262;}
+        .login-sec h2{margin-bottom:30px; font-weight:800; font-size:30px; color: #DE6262;}
+        .login-sec h2:after{content:" "; width:100px; height:5px; background:#FEB58A; display:block; margin-top:20px; border-radius:3px; margin-left:auto;margin-right:auto}
+        .btn-login{background: #DE6262; color:#fff; font-weight:600;}
+        .banner-text{width:70%; position:absolute; bottom:40px; padding-left:20px;}
+        .banner-text h2{color:#fff; font-weight:600;}
+        .banner-text h2:after{content:" "; width:100px; height:5px; background:#FFF; display:block; margin-top:20px; border-radius:3px;}
+        .banner-text p{color:#fff;}
+    </style>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+    {% load static %}
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    {% block title %}<title>Register Patients</title>{% endblock title %}
+{% endblock head %}
+
+
+{% block body %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show my-0" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <section class="login-block">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 login-sec">
+                    <h2 class="text-center"> Register Patient</h2>
+                    <form method="POST" action="/PatientRegister/" class="row g-3 needs-validation" novalidate>
+                        {% csrf_token %}
+                        <div >
+                            <label for="validationCustom01" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="validationCustom01" name="name" required>
+                            <div class="invalid-feedback">
+                                Please provide a valid Name.
+                            </div>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div >
+                            <label for="fathername" class="form-label">Father Name</label>
+                            <input type="text" class="form-control" id="fathername" name="fathername" required>
+                            <div class="invalid-feedback">
+                                Please provide a valid Name.
+                            </div>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+
+                        <div >
+
+                            <label for="nicnum" class="form-label">CNIC Number (format: xxxxx-xxxxxxx-x):</label>
+
+                            <input id="phonenum"  max="13" type="tel"pattern="^\d{5}-\d{8}-\d{1}$"  class="form-control" id="CNIC" name="CNIC" required>
+                            <div class="invalid-feedback">
+                                Please provide a valid CNIC.
+                            </div>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div >
+                            <label for="phone" class="form-label">Phone Number (format: 03xxxxxxxx):</label>
+                            <input  id="phonenum"  max="11"  type="tel" pattern="^\d{11}$"  class="form-control" id="phone" name="phone" required>
+                            <div class="invalid-feedback">
+                                Please provide a valid Phone.
+                            </div>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div >
+                            <label for="address" class="form-label">Address</label>
+                            <input type="address" class="form-control" id="address" name="address" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please provide a valid Address.
+                            </div>
+                        </div>
+                        <div >
+                            <label for="text" class="form-label">Bed No (format: 01):</label>
+                            <input   max="2"  type="tel" pattern="^\d+$"  class="form-control" id="bedno" name="bedno" required>
+                            <div class="invalid-feedback">
+                                Please provide a valid Bed No.
+                            </div>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+
+                        </div>
+                        <div >
+                            <label for="age" class="form-label">Age (format: 01):</label>
+                            <input   max="2"  type="tel" pattern="^\d{2}$"  class="form-control" id="age" name="age" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please provide a age.
+                            </div>
+                        </div >
+                        <div >
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                                <label class="form-check-label" for="invalidCheck">
+                                    Agree to terms and conditions
+                                </label>
+                                <div class="invalid-feedback">
+                                    You must agree before submitting.
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-"style = "margin-left: 9rem">
+                            <button type="submit" class="btn-danger" >Register</button>
+                        </div>
+                    </form>
+
+                    <div class="copy-text">Created with <i class="fa fa-heart"></i> by Burhan & Fizza</div>
+                </div>
+                <div class="col-md-8 banner-sec">
+                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        </ol>
+                        <div class="carousel-inner" role="listbox">
+                            <div class="carousel-item active">
+                                <img class="d-block img-fluid" src="https://source.unsplash.com/1600x900/?covid-19,hospital" alt="First slide">
+                                <!--                            <div class="carousel-caption d-none d-md-block">-->
+                                <!--&lt;!&ndash;                                <div class="banner-text">&ndash;&gt;-->
+                                <!--&lt;!&ndash;                                                                        <h2>This is Heaven</h2>&ndash;&gt;-->
+                                <!--&lt;!&ndash;                                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>&ndash;&gt;-->
+                                <!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+                                <!--                            </div>-->
+                            </div>
+                            <div class="carousel-item">
+                                <img class="d-block img-fluid" src="https://source.unsplash.com/1600x900/?covid-19,patient" alt="First slide">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <!--                                <div class="banner-text">-->
+                                    <!--                                    &lt;!&ndash;                                    <h2>This is Heaven</h2>&ndash;&gt;-->
+                                    <!--                                    &lt;!&ndash;                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>&ndash;&gt;-->
+                                    <!--                                </div>-->
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img class="d-block img-fluid" src="https://source.unsplash.com/1600x900/?covid-19,vaccine" alt="First slide">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <div class="banner-text">
+                                        <!--                                    <h2>This is Heaven</h2>-->
+                                        <!--                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock body %}
+
+{% block js %}
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+{% endblock js %}
+
+
+
+
+
+
+
+
+

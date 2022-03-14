@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% block head %}
+    {% load static %}
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+    <script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <link href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+
+    {% block title %}<title>Patient List</title>{% endblock title %}
+    <style>
+        #myInput {
+            background-image: url('/css/searchicon.png'); /* Add a search icon to input */
+            background-position: 10px 12px; /* Position the search icon */
+            background-repeat: no-repeat; /* Do not repeat the icon image */
+            width: 100%; /* Full-width */
+            font-size: 16px; /* Increase font-size */
+            padding: 12px 20px 12px 40px; /* Add some padding */
+            border: 1px solid #ddd; /* Add a grey border */
+            margin-bottom: 12px; /* Add some space below the input */
+        }
+
+        #myTable {
+            border-collapse: collapse; /* Collapse borders */
+            width: 100%; /* Full-width */
+            border: 1px solid #ddd; /* Add a grey border */
+            font-size: 16px; /* Increase font-size */
+        }
+
+        #myTable th, #myTable td {
+            text-align: left; /* Left-align text */
+            padding: 12px; /* Add padding */
+        }
+
+        #myTable tr {
+            /* Add a bottom border to all table rows */
+            border-bottom: 1px solid #ddd;
+        }
+
+        #myTable tr.header, #myTable tr:hover {
+            /* Add a grey background color to the table header and on hover */
+            background-color: #f1f1f1;
+        }
+    </style>
+{% endblock head %}
+
+{% block body %}
+
+    <div  class='container mt-1' >
+        {#        <form  method="post"  style = "margin-left: 4in" >#}
+        {#            {% csrf_token %}#}
+        {#            <label for="bed">Choose Bed:</label>#}
+        {##}
+        {#            <select id="bedno" name="bedno">#}
+        {#                {% for i in ls %}#}
+        {#                    <option class="mx-8" value="{{ i }}" name="bedno" >{{ i }}</option>#}
+        {#                {% endfor %}#}
+        {#            </select>#}
+        {#            <button  type="submit" class="btn btn-primary mx-8" >Show Record</button>#}
+        {##}
+        {#        </form>#}
+        <div class="search" style="display: flex; flex-direction: row">
+            <label>Search</label>
+            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+            {#            <input id="myInput" type="search" phlaceholder="search" class="mt-1">#}
+        </div>
+        </dev>
+        <div class="row">
+
+            <table class="table"  id='myTable' class='display' style="width:100%; background-color:dimgrey" >
+                <thead style="width:100%; background-color:dimgrey">
+                <tr id="tr">
+                    <th scope="col" >Name</th>
+                    <th scope="col" >Father Name</th>
+                    <th scope="col">CNIC</th>
+                    <th scope="col">Address</th>
+                    <th scope="col" >Phone</th>
+                    <th scope="col" >Bed No</th>
+                    <th scope="col">Age</th>
+                </tr>
+                </thead>
+                <tbody id="mybody" style =background-color:gray>
+                {% for Name,FatherName,CNIC,Address,Phone,Age,Bedno in comb_lis %}
+                    <tr>
+                        <td id="td">{{Name}}</td>
+                        <td >{{FatherName}}</td>
+                        <td>{{CNIC}}</td>
+                        <td>{{Address}}</td>
+                        <td>{{Phone}}</td>
+                        <td>{{Age}}</td>
+                        <td>{{Bedno}}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock body %}
+
+{% block js %}
+    <script>
+        function myFunction() {
+            // Declare variables
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+{% endblock js %}
